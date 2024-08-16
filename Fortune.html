@@ -3,57 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fortune Teller</title>
+    <title>Advanced Fortune Teller</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f2f2f2;
-            padding: 50px;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        #fortune {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #555;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #4CAF50;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 125vh;
+            background-image: url(images/fortune.jpg);
+            background-size: cover;
             color: white;
-            border: none;
-            border-radius: 5px;
+            text-shadow: 2px 2px 4px #000000;
+            margin: 0;
         }
-
+        .fortune-teller {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+            max-width: 400px;
+            height:150vh;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            color: #ffeb3b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        button {
+            background-color: #ff5722;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            outline: none;
+        }
+        button:active {
+            background-color: #d84315;
+            transform: scale(0.95);
+        }
         button:hover {
-            background-color: #45a049;
+            background-color: #e64a19;
+            transform: scale(1.1);
+        }
+        #fortune {
+            margin-top: 30px;
+            font-size: 24px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            min-height: 30px;
+        }
+        .visible {
+            opacity: 1;
+        }
+        .fortune-teller img {
+            width: 100px;
+            margin-top: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        .history {
+            margin-top: 40px;
+            text-align: left;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            max-height: 150px;
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .history h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #ffeb3b;
+            text-transform: uppercase;
+        }
+        .history p {
+            margin: 5px 0;
+        }
+        @media (max-width: 500px) {
+            body {
+                padding: 20px;
+            }
+            .fortune-teller {
+                max-width: 100%;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            button {
+                width: 100%;
+                padding: 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Ask the Fortune Teller</h1>
-    <p>Click the button to reveal your fortune!</p>
-    <button onclick="tellFortune()">Reveal Fortune</button>
-    <div id="fortune"></div>
+    <div class="fortune-teller">
+        <h1>Ask the Fortune Teller</h1>
+        <button onclick="revealFortune()">Reveal Your Fortune</button>
+        <div id="fortune"></div>
+        <img src= images/crystall.png alt="Crystal Ball">
+        <div class="history">
+            <h2>Previous Fortunes</h2>
+            <div id="fortune-history"></div>
+        </div>
+    </div>
 
     <script>
-        function tellFortune() {
+        function revealFortune() {
             var fortunes = [
                 "You will have a great day!",
                 "Something unexpected will happen.",
                 "Good news is on its way.",
                 "You will achieve your goals.",
-                "A pleasant surprise awaits you."
+                "A pleasant surprise awaits you.",
+                "An old friend will contact you soon.",
+                "A new opportunity is on the horizon.",
+                "Today is the beginning of a new adventure.",
+                "Fortune favors the brave!",
+                "You will find happiness in unexpected places."
             ];
             var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-            document.getElementById("fortune").innerHTML = randomFortune;
+            var fortuneElement = document.getElementById("fortune");
+            var fortuneHistory = document.getElementById("fortune-history");
+
+            fortuneElement.innerHTML = randomFortune;
+            fortuneElement.classList.add("visible");
+
+            var newHistoryItem = document.createElement("p");
+            newHistoryItem.textContent = randomFortune;
+            fortuneHistory.insertBefore(newHistoryItem, fortuneHistory.firstChild);
         }
     </script>
 </body>
