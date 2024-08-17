@@ -5,44 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fortune Teller</title>
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
         body {
             font-family: 'Arial', sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             background-image: url(images/fortune.jpg);
             background-size: cover;
+            background-position: center;
             color: white;
-            margin: 0;
+            background-color: black;
+        }
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
         }
         .fortune-teller {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             padding: 40px;
             border-radius: 15px;
             text-align: center;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
-            max-width: 400px;
+            max-width: 500px;
+            border: 3px solid white;
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
         }
-
         h1 {
             margin-bottom: 20px;
             font-size: 2.5em;
             color: #ffeb3b;
+            font-style: italic;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 5px black;
+            line-height: 1.2;
+            text-align: center;
         }
         p.description {
             margin-bottom: 30px;
-            font-size: 1.2em;
+            font-size: 1.3em;
+            line-height: 1.5;
+            font-weight: lighter;
+            font-style: normal;
+            color: #ccc;
+            padding: 0 10px;
+            text-align: center;
+            word-wrap: break-word;
         }
         button {
             background-color: #ff5722;
             border: none;
             color: white;
             padding: 15px 30px;
-            font-size: 18px;
+            font-size: 20px;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
         }
         button:active {
             background-color: #d84315;
@@ -58,17 +92,29 @@
             font-weight: bold;
             color: #ffeb3b;
             border: 3px solid #ffeb3b;
-            padding: 15px;
+            padding: 20px;
             border-radius: 10px;
             background-color: rgba(0, 0, 0, 0.6);
-            transition: transform 0.5s ease-in-out;
+            min-height: 60px;
+            box-shadow: 0 0 10px #ffeb3b;
+            letter-spacing: 1px;
+            word-spacing: 3px;
+            transition: transform 0.3s ease-in-out;
             transform: scale(1);
-            min-height: 50px;
+            text-align: center;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 30px;
         }
         .fortune-teller img {
-            width: 100px;
+            width: 150px;
             margin-top: 20px;
             animation: float 3s ease-in-out infinite;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.8;
         }
         @keyframes float {
             0%, 100% {
@@ -82,40 +128,60 @@
             margin-top: 40px;
             text-align: left;
             background-color: rgba(255, 255, 255, 0.1);
-            padding: 10px;
+            padding: 15px;
             border-radius: 10px;
             max-height: 150px;
             overflow-y: auto;
             font-size: 14px;
+            border: 1px solid #ffeb3b;
+            box-shadow: inset 0 0 5px #ffeb3b;
+            font-style: italic;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            padding-left: 20px;
         }
         .history h2 {
-            font-size: 18px;
+            font-size: 20px;
             margin-bottom: 10px;
             color: #ffeb3b;
+            text-align: center;
+            text-shadow: 1px 1px 3px black;
         }
         .history p {
             margin: 5px 0;
+            padding-left: 10px;
+            border-left: 2px solid #ffeb3b;
+            padding-bottom: 5px;
+            font-size: 16px;
+            line-height: 1.2;
         }
         #clear-history {
             margin-top: 20px;
             background-color: #3e2723;
             color: white;
             padding: 10px 20px;
-            font-size: 14px;
+            font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
             border: none;
             transition: background-color 0.3s;
+            box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+            width: 80%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
         #clear-history:hover {
             background-color: #5d4037;
         }
-        @media (max-width: 500px) {
+        @media (max-width: 600px) {
             body {
                 padding: 20px;
             }
             .fortune-teller {
                 max-width: 100%;
+                padding: 30px;
+                margin: 10px;
             }
             h1 {
                 font-size: 2em;
@@ -124,23 +190,42 @@
                 width: 100%;
                 padding: 15px;
             }
+            p.description {
+                font-size: 1.1em;
+            }
+        }
+        footer {
+            position: relative;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            color: #ccc;
+            font-style: italic;
+            font-weight: lighter;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding-bottom: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="fortune-teller">
-        <h1>Ask the Fortune Teller</h1>
-        <p class="description">Click the button to reveal your fortune!</p>
-        <button onclick="revealFortune()">Reveal Your Fortune</button>
-        <div id="current-fortune"></div>
-        <img src=images/crystall.png alt="Crystal Ball">
-        <div class="history">
-            <h2>Previous Fortunes</h2>
-            <div id="fortune-history"></div>
+    <div class="container">
+        <div class="fortune-teller">
+            <h1>Ask the Fortune Teller</h1>
+            <p class="description">Click the button to reveal your fortune! Your destiny awaits...</p>
+            <button onclick="revealFortune()">Reveal Your Fortune</button>
+            <div id="current-fortune"></div>
+            <img src=images/crystal.png alt="Crystal Ball">
+            <div class="history">
+                <h2>Previous Fortunes</h2>
+                <div id="fortune-history"></div>
+            </div>
+            <button id="clear-history" onclick="clearHistory()">Clear History</button>
         </div>
-        <button id="clear-history" onclick="clearHistory()">Clear History</button>
     </div>
 
+    <footer>&copy; 2024 Fortune Teller App by [Your Name]</footer>
     <script>
         function revealFortune() {
             var fortunes = [
@@ -158,9 +243,8 @@
             var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
             var fortuneElement = document.getElementById("current-fortune");
             var fortuneHistory = document.getElementById("fortune-history");
-
             fortuneElement.innerHTML = randomFortune;
-            fortuneElement.style.transform = "scale(1.2)";
+            fortuneElement.style.transform = "scale(1.3)";
             setTimeout(function() {
                 fortuneElement.style.transform = "scale(1)";
             }, 500);
