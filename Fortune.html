@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Fortune Teller</title>
+    <title>Fortune Teller</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 125vh;
+            height: 100vh;
             background-image: url(images/fortune.jpg);
             background-size: cover;
             color: white;
-            text-shadow: 2px 2px 4px #000000;
             margin: 0;
         }
         .fortune-teller {
@@ -24,14 +23,16 @@
             text-align: center;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
             max-width: 400px;
-            height:150vh;
         }
+
         h1 {
             margin-bottom: 20px;
             font-size: 2.5em;
             color: #ffeb3b;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        }
+        p.description {
+            margin-bottom: 30px;
+            font-size: 1.2em;
         }
         button {
             background-color: #ff5722;
@@ -41,8 +42,7 @@
             font-size: 18px;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-            outline: none;
+            transition: background-color 0.3s;
         }
         button:active {
             background-color: #d84315;
@@ -52,15 +52,18 @@
             background-color: #e64a19;
             transform: scale(1.1);
         }
-        #fortune {
+        #current-fortune {
             margin-top: 30px;
-            font-size: 24px;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            min-height: 30px;
-        }
-        .visible {
-            opacity: 1;
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffeb3b;
+            border: 3px solid #ffeb3b;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            transition: transform 0.5s ease-in-out;
+            transform: scale(1);
+            min-height: 50px;
         }
         .fortune-teller img {
             width: 100px;
@@ -84,16 +87,28 @@
             max-height: 150px;
             overflow-y: auto;
             font-size: 14px;
-            line-height: 1.6;
         }
         .history h2 {
             font-size: 18px;
             margin-bottom: 10px;
             color: #ffeb3b;
-            text-transform: uppercase;
         }
         .history p {
             margin: 5px 0;
+        }
+        #clear-history {
+            margin-top: 20px;
+            background-color: #3e2723;
+            color: white;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        #clear-history:hover {
+            background-color: #5d4037;
         }
         @media (max-width: 500px) {
             body {
@@ -105,7 +120,7 @@
             h1 {
                 font-size: 2em;
             }
-            button {
+            button, #clear-history {
                 width: 100%;
                 padding: 15px;
             }
@@ -115,13 +130,15 @@
 <body>
     <div class="fortune-teller">
         <h1>Ask the Fortune Teller</h1>
+        <p class="description">Click the button to reveal your fortune!</p>
         <button onclick="revealFortune()">Reveal Your Fortune</button>
-        <div id="fortune"></div>
-        <img src= images/crystall.png alt="Crystal Ball">
+        <div id="current-fortune"></div>
+        <img src=images/crystall.png alt="Crystal Ball">
         <div class="history">
             <h2>Previous Fortunes</h2>
             <div id="fortune-history"></div>
         </div>
+        <button id="clear-history" onclick="clearHistory()">Clear History</button>
     </div>
 
     <script>
@@ -139,15 +156,21 @@
                 "You will find happiness in unexpected places."
             ];
             var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-            var fortuneElement = document.getElementById("fortune");
+            var fortuneElement = document.getElementById("current-fortune");
             var fortuneHistory = document.getElementById("fortune-history");
 
             fortuneElement.innerHTML = randomFortune;
-            fortuneElement.classList.add("visible");
-
+            fortuneElement.style.transform = "scale(1.2)";
+            setTimeout(function() {
+                fortuneElement.style.transform = "scale(1)";
+            }, 500);
             var newHistoryItem = document.createElement("p");
             newHistoryItem.textContent = randomFortune;
             fortuneHistory.insertBefore(newHistoryItem, fortuneHistory.firstChild);
+        }
+        function clearHistory() {
+            var fortuneHistory = document.getElementById("fortune-history");
+            fortuneHistory.innerHTML = "";
         }
     </script>
 </body>
